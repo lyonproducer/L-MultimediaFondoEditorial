@@ -67,51 +67,42 @@ class WorkdesignController extends Controller
     public function store(WorkdesignStoreRequest $request)
     {
         //guarda los datos
-        //Primer valida la informacion
         $post= WorkDesign::create($request->all());
-        //Imagen
-        if($request->file('file')){
-            //carpeta donde se guarda
-            $path = Storage::disk('public')->put('image', $request->file('file'));
-            $post->fill(['file' => asset($path)])->save();
-        }
-
-        return response()->json([
-    		'data'=> 'Diseño añadido correctamente'
-    	], Response::HTTP_CREATED);
+        return response()->json($post, Response::HTTP_CREATED);
     }
 
     public function storeFile($id,Request $request)
     {   
         //Si no existe un id
-        if(empty($id)){
+        if($id==0){
             //busca el ultimo post el cual se añadio a la base de datos
             $post = Workdesign::orderBy('id','DESC')->first();
             //si existe el archivo file en el request
             if($request->file('file')){
                 //path guarda la direccion de la carpeta donde se guarda
-                $path = Storage::disk('public')->put('image', $request->file('file'));
+                //$path = Storage::disk('public')->put('image/'.$id, $request->file('file'));
+                $path = Storage::disk('public')->put('image/'.$post->id, $request->file('file'));
                 //actualiza el campo file con la direccion
                 $post->fill(['file' => asset($path)])->save();   
             }
             return response()->json(['data'=> 'Imagen añadida correctamente'], Response::HTTP_CREATED);
 
+        }else{
+            //Si existe id esta editando un post
+            $post = WorkDesign::find($id);
+            $resultado = substr($post->file, 22);
+            Storage::disk('public')->delete($resultado);
+
+            if($request->file('file')){
+                //carpeta donde se guarda
+                $path = Storage::disk('public')->put('image/'.$id, $request->file('file'));
+                $post->fill(['file' => asset($path)])->save(); 
+                return response()->json([
+                    'data'=> 'Imagen actualizada correctamente'
+                ], Response::HTTP_CREATED);  
+            }
         }
-        //Si existe id esta editando un post
-        $post = WorkDesign::find($id);
-        $resultado = substr($post->file, 22);
-        Storage::disk('public')->delete($resultado);
 
-        if($request->file('file')){
-            //carpeta donde se guarda
-            $path = Storage::disk('public')->put('image', $request->file('file'));
-            $post->fill(['file' => asset($path)])->save(); 
-            return response()->json([
-                'data'=> 'Imagen actualizada correctamente'
-            ], Response::HTTP_CREATED);  
-        }else
-
-        return response()->json(['data'=> 'no se encontro imagen']); 
     }
 
     /**
