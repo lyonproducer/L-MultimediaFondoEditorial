@@ -53,8 +53,12 @@ Route::group([
     Route::post('workdesigns/{id}','Admin\WorkdesignController@update');
 
     //Route::post('workdesignsFile/','Admin\WorkdesignController@storeFile');
-    Route::post('workdesignsFile/{id}','Admin\WorkdesignController@storeFile');
+    Route::post('workdesignsFile/{id?}','Admin\WorkdesignController@storeFile');
 
-    
+    //work
+    Route::post('work','Admin\WorkController@store');
+    Route::get('works/{id}','Admin\WorkController@index');
+    Route::delete('work/{id}','Admin\WorkController@destroy');
+    Route::get('workDownload/{id}','Admin\WorkController@download');
 
 });

@@ -17,9 +17,10 @@ class CreateWorksTable extends Migration
             $table->increments('id');
             $table->integer('work_design_id')->unsigned();
 
+            $table->string('title');
             $table->string('description');
             $table->string('type');
-            $table->string('file',128);
+            $table->string('file',128)->nullable();
             $table->timestamps();
 
             $table->foreign('work_design_id')->references('id')->on('work_designs')
