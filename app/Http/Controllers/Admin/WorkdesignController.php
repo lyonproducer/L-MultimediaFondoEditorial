@@ -74,14 +74,17 @@ class WorkdesignController extends Controller
     public function storeFile($id,Request $request)
     {   
         //Si no existe un id
-        if($id==0){
+        if($id == 0){
             //busca el ultimo post el cual se añadio a la base de datos
             $post = Workdesign::orderBy('id','DESC')->first();
             //si existe el archivo file en el request
             if($request->file('file')){
+
+                $file = $request->file('file');
+                $filename = time().'-Design-'.$post->title;
+                $path = Storage::disk('public')->putFileAs('image/workDesigns', $file, $filename );
                 //path guarda la direccion de la carpeta donde se guarda
-                //$path = Storage::disk('public')->put('image/'.$id, $request->file('file'));
-                $path = Storage::disk('public')->put('image/'.$post->id, $request->file('file'));
+                //$path = Storage::disk('public')->put('image/', $request->file('file'));
                 //actualiza el campo file con la direccion
                 $post->fill(['file' => asset($path)])->save();   
             }
@@ -94,8 +97,11 @@ class WorkdesignController extends Controller
             Storage::disk('public')->delete($resultado);
 
             if($request->file('file')){
+                $file = $request->file('file');
+                $filename = time().'-Design-'.$post->title;
+                $path = Storage::disk('public')->putFileAs('image/workDesigns', $file, $filename );
                 //carpeta donde se guarda
-                $path = Storage::disk('public')->put('image/'.$id, $request->file('file'));
+                //$path = Storage::disk('public')->put('image/', $request->file('file'));
                 $post->fill(['file' => asset($path)])->save(); 
                 return response()->json([
                     'data'=> 'Imagen actualizada correctamente'
