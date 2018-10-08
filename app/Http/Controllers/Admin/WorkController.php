@@ -44,8 +44,6 @@ class WorkController extends Controller
     public function store(Request $request)
     {
 
-        //dd($request->file);
-        //$post = Work::create($request->all());
         $post = new Work;
 
         $post->work_design_id = $request->work_design_id;
@@ -56,14 +54,10 @@ class WorkController extends Controller
         if($request->file('file')){
             
             $file = $request->file('file');
-            $filename = 'complemento-'.time().'-'.$request->fileName;
+            $filename = time().'-'.$request->title.'-'.$request->type;
 
             $path = Storage::disk('public')->putFileAs('image/works', $file, $filename );
             $post->file = $path; 
-
-            //$path = Storage::disk('public')->put('image/works', $request->file('file'));
-            //actualiza el campo file con la direccion
-            //$post->file = asset($path); 
         }
 
         $post->save();

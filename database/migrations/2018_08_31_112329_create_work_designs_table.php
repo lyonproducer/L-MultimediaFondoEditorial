@@ -26,6 +26,7 @@ class CreateWorkDesignsTable extends Migration
             $table->string('publishedDate');
             $table->string('file',128)->nullable();
             $table->enum('status', ['Finalizado','En proceso']);
+            $table->string('uploadBy');
             $table->timestamps();
 
             //relation

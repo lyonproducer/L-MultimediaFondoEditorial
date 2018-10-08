@@ -16,5 +16,6 @@ $factory->define(App\WorkDesign::class, function (Faker $faker) {
         'publishedDate'=> $faker->date($format = 'Y-m-d', $max = 'now'),
         'file'=> $faker->imageUrl($width = 1200, $height = 400),
         'status'=> $faker->randomElement(['Finalizado','En proceso']),
+        'uploadBy'=> $faker->name,
     ];
 });

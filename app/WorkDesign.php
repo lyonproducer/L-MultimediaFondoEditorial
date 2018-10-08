@@ -8,7 +8,16 @@ class WorkDesign extends Model
 {
     
     protected $fillable=[
-        'user_id', 'category_id', 'title', 'excerpt','description','status','publishedDate','dependency', 'file'
+        'user_id', 
+        'category_id', 
+        'title', 
+        'excerpt',
+        'description',
+        'status',
+        'publishedDate',
+        'dependency', 
+        'file',
+        'uploadBy'
     ];
 
     public function user(){
