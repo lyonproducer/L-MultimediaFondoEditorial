@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\WorkDesign;
+use App\User;
 use App\Category;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +21,49 @@ class WorkdesignController extends Controller
         $workdesigns =  WorkDesign::where('category_id',$id)->get();
 
         foreach($workdesigns as $workdesign){
-            //$categoria= Category::Where('id',$workdesign->category_id)->value('name');
             $categoria=$workdesign->category->name;
         }
         return response()->json($workdesigns);
+    }
+
+    public function workdesignUsers($id){
+
+        $workdesigns =  WorkDesign::where('user_id',$id)->get();
+
+        foreach($workdesigns as $workdesign){
+            $categoria=$workdesign->category->name;
+        }
+        return response()->json($workdesigns);
+    }
+
+    public function workdesignTitle($title){
+
+        $workdesigns =  WorkDesign::where("title","like","%$title%")->get();
+        foreach($workdesigns as $workdesign){
+            $categoria=$workdesign->category->name;
+        }
+        return response()->json($workdesigns);
+
+    }
+
+    public function workdesignDependency($dependency){
+
+        $workdesigns =  WorkDesign::where("dependency",$dependency)->get();
+        foreach($workdesigns as $workdesign){
+            $categoria=$workdesign->category->name;
+        }
+        return response()->json($workdesigns);
+
+    }
+
+    public function workdesignStatus($status){
+
+        $workdesigns =  WorkDesign::where("status",$status)->get();
+        foreach($workdesigns as $workdesign){
+            $categoria=$workdesign->category->name;
+        }
+        return response()->json($workdesigns);
+
     }
     /**
      * Display a listing of the resource.
@@ -32,7 +72,7 @@ class WorkdesignController extends Controller
      */
     public function index()
     {   
-        $workdesigns = Workdesign::orderBy('id','ASC')->get();
+        $workdesigns = Workdesign::orderBy('id','DESC')->get();
         
         foreach($workdesigns as $workdesign){
             $categoria=$workdesign->category->name;
@@ -45,6 +85,21 @@ class WorkdesignController extends Controller
             //$workdesign['nombreCategoria']= $workdesign->category->name;   
         }
         return response()->json($workdesigns);
+    }
+
+    public function usersList(){
+
+        $workdesigns =  WorkDesign::pluck('user_id')->all();
+
+        //$users = User::whereIn('id',$workdesigns)->get();
+
+        //todos los usuarios que tienen post 
+        $users = User::select('id','name')->whereIn('id',$workdesigns)->get();
+
+        //Todos los usuarios muestra id y name
+        //$users = User::all('id','name');
+
+        return $users;
     }
 
     /**
