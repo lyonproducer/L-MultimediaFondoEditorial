@@ -16,6 +16,51 @@ use Illuminate\Support\Facades\Storage;
 
 class WorkdesignController extends Controller
 {   
+    public function avancedSearch(Request $request)
+    {   
+
+        //dd($request->all());
+
+        $array=[];
+
+        $workdesigns = WorkDesign::where("title","like","%$request->title%")->
+                        where("uploadBy","like","%$request->uploadBy%")->
+                        where("dependency","like","%$request->dependency%")->
+                        where("status","like","%$request->status%")->
+                        //where("publishedDate","like","%$request->publishedDate%")->
+                        get();
+        
+        foreach($workdesigns as $workdesign){
+            $categoria=$workdesign->category->name; 
+        }
+
+        if($request->publishedDate!= null){
+
+            $fecha = explode("-", $request->publishedDate);
+            $año = $fecha[0]; // porción1
+            $mes = $fecha[1]; // porción2
+            $dia = $fecha[2]; // porción2
+
+            foreach($workdesigns as $workdesign){
+                $workFecha = explode("-", $workdesign->publishedDate);
+                $workaño = $workFecha[0]; // porción1
+                $workmes = $workFecha[1]; // porción2
+                $workdia = $workFecha[2]; // porción2
+
+                if($mes == $workmes && $año == $workaño){
+                    //dd($workdesign->toArray(), "dia", $dia);
+                    array_push($array, $workdesign);
+                }
+                
+            }
+            return response()->json($array);
+
+        }
+
+        return response()->json($workdesigns);
+        
+    }
+
     public function workdesignCategory($id){
 
         $workdesigns =  WorkDesign::where('category_id',$id)->get();

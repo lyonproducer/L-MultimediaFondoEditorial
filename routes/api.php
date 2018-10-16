@@ -49,6 +49,8 @@ Route::group([
     Route::get('workdesignTitle/{title}','Admin\WorkdesignController@workdesignTitle');
     Route::get('workdesignDependency/{dependency}','Admin\WorkdesignController@workdesignDependency');
     Route::get('workdesignStatus/{status}','Admin\WorkdesignController@workdesignStatus');
+    //Diseños busqueda FILTRO
+    Route::get('workdesignSearch','Admin\WorkdesignController@avancedSearch');
     //Diseños -- Resource
     Route::get('workdesigns','Admin\WorkdesignController@index');
     Route::delete('workdesigns/{id}','Admin\WorkdesignController@destroy');
@@ -63,7 +65,6 @@ Route::group([
     Route::get('works/{id}','Admin\WorkController@index');
     Route::delete('work/{id}','Admin\WorkController@destroy');
     Route::get('workDownload/{id}','Admin\WorkController@download');
-
 
     //users
     Route::get('usersName','Admin\WorkdesignController@usersList');
