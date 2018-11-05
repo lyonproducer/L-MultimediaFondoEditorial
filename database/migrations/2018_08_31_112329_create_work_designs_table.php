@@ -14,6 +14,7 @@ class CreateWorkDesignsTable extends Migration
     public function up()
     {
         Schema::create('work_designs', function (Blueprint $table) {
+            
             $table->increments('id');
 
             $table->integer('user_id')->unsigned();
