@@ -1,6 +1,6 @@
 <?php
 
-
+/*
 return array(
     "driver" => "smtp",
     "host" => "smtp.mailtrap.io",
@@ -15,7 +15,8 @@ return array(
     "pretend" => false
   );
 
-/*
+*/  
+
 
 return [
 
@@ -54,4 +55,3 @@ return [
 
 ];
 
-*/

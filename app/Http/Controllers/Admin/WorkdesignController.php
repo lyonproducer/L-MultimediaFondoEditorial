@@ -181,7 +181,7 @@ class WorkdesignController extends Controller
             if($request->file('file')){
 
                 $file = $request->file('file');
-                $filename = time().'-Design-'.$post->title;
+                $filename = time().'-Design-'.$post->title.'.jpg';
                 $path = Storage::disk('public')->putFileAs('image/workDesigns', $file, $filename );
                 //path guarda la direccion de la carpeta donde se guarda
                 //$path = Storage::disk('public')->put('image/', $request->file('file'));
@@ -198,7 +198,7 @@ class WorkdesignController extends Controller
 
             if($request->file('file')){
                 $file = $request->file('file');
-                $filename = time().'-Design-'.$post->title;
+                $filename = time().'-Design-'.$post->title.'.jpg';
                 $path = Storage::disk('public')->putFileAs('image/workDesigns', $file, $filename );
                 //carpeta donde se guarda
                 //$path = Storage::disk('public')->put('image/', $request->file('file'));

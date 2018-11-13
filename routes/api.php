@@ -64,10 +64,10 @@ Route::group([
     Route::post('work','Admin\WorkController@store')->middleware('jwt.verify');
     Route::get('works/{id}','Admin\WorkController@index')->middleware('jwt.verify');
     Route::delete('work/{id}','Admin\WorkController@destroy')->middleware('jwt.verify');
-    Route::get('workDownload/{id}','Admin\WorkController@download')->middleware('jwt.verify');
+    Route::get('workDownload/{id}','Admin\WorkController@download');
 
     //users
-    Route::get('usersName','Admin\WorkdesignController@usersList')->middleware('jwt.verify');
+    Route::get('usersName','Admin\WorkdesignController@usersList');
 
 });
 

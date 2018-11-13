@@ -54,7 +54,7 @@ class WorkController extends Controller
         if($request->file('file')){
             
             $file = $request->file('file');
-            $filename = time().'-'.$request->title.'-'.$request->type;
+            $filename = time().'-'.$request->title.'-'.$request->type.'.jpg';
 
             $path = Storage::disk('public')->putFileAs('image/works', $file, $filename );
             $post->file = $path; 
