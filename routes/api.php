@@ -56,6 +56,7 @@ Route::group([
     Route::delete('workdesigns/{id}','Admin\WorkdesignController@destroy')->middleware('jwt.verify');
     Route::post('workdesigns','Admin\WorkdesignController@store')->middleware('jwt.verify');
     Route::post('workdesigns/{id}','Admin\WorkdesignController@update')->middleware('jwt.verify');
+    Route::get('workdesignDownload/{id}','Admin\WorkdesignController@download');
 
     //Route::post('workdesignsFile/','Admin\WorkdesignController@storeFile');
     Route::post('workdesignsFile/{id?}','Admin\WorkdesignController@storeFile')->middleware('jwt.verify');

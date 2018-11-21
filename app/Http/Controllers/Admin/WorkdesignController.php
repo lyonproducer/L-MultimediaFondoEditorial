@@ -186,15 +186,19 @@ class WorkdesignController extends Controller
                 //path guarda la direccion de la carpeta donde se guarda
                 //$path = Storage::disk('public')->put('image/', $request->file('file'));
                 //actualiza el campo file con la direccion
-                $post->fill(['file' => asset($path)])->save();   
+
+                //dd($path);
+                $post->file = $path;
+                $post->save(); 
+                //$post->fill(['file' => asset($path)])->save();   
             }
             return response()->json(['data'=> 'Imagen añadida correctamente'], Response::HTTP_CREATED);
 
         }else{
             //Si existe id esta editando un post
             $post = WorkDesign::find($id);
-            $resultado = substr($post->file, 22);
-            Storage::disk('public')->delete($resultado);
+            //$resultado = substr($post->file, 22);
+            Storage::disk('public')->delete($post->file);
 
             if($request->file('file')){
                 $file = $request->file('file');
@@ -202,7 +206,9 @@ class WorkdesignController extends Controller
                 $path = Storage::disk('public')->putFileAs('image/workDesigns', $file, $filename );
                 //carpeta donde se guarda
                 //$path = Storage::disk('public')->put('image/', $request->file('file'));
-                $post->fill(['file' => asset($path)])->save(); 
+                //$post->fill(['file' => asset($path)])->save(); 
+                $post->file = $path;
+                $post->save(); 
                 return response()->json([
                     'data'=> 'Imagen actualizada correctamente'
                 ], Response::HTTP_CREATED);  
@@ -260,12 +266,17 @@ class WorkdesignController extends Controller
         $post = WorkDesign::find($id);
         WorkDesign::find($id)->delete();
 
-        $resultado = substr($post->file, 22);
-        Storage::disk('public')->delete($resultado);
+        //$resultado = substr($post->file, 22);
+        Storage::disk('public')->delete($post->file);
 
         return response()->json([
     		'data'=> 'Trabajo eliminado'
         ], Response::HTTP_OK);
+    }
+
+    public function download($id){
+        $post = WorkDesign::find($id);
+        return Storage::disk('public')->download($post->file);
     }
 
 

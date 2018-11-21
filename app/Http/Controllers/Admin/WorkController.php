@@ -22,7 +22,6 @@ class WorkController extends Controller
     {
         $posts = Work::Where('work_design_id',$id)->get();
         return response()->json($posts);
-
     }
 
     /**
@@ -58,6 +57,8 @@ class WorkController extends Controller
 
             $path = Storage::disk('public')->putFileAs('image/works', $file, $filename );
             $post->file = $path; 
+            //$post->file = url('').'/public/image/works'.$filename;
+            //return $post->file; 
         }
 
         $post->save();
@@ -116,7 +117,6 @@ class WorkController extends Controller
     }
 
     public function download($id){
-
         $post = Work::find($id);
         return Storage::disk('public')->download($post->file);
     }
