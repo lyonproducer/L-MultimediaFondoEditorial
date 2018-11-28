@@ -173,6 +173,8 @@ class WorkdesignController extends Controller
 
     public function storeFile($id,Request $request)
     {   
+        //$file = $request->file;
+        //dd($file);
         //Si no existe un id
         if($id == 0){
             //busca el ultimo post el cual se añadio a la base de datos

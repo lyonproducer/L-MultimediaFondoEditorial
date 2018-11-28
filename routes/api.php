@@ -59,7 +59,7 @@ Route::group([
     Route::get('workdesignDownload/{id}','Admin\WorkdesignController@download');
 
     //Route::post('workdesignsFile/','Admin\WorkdesignController@storeFile');
-    Route::post('workdesignsFile/{id?}','Admin\WorkdesignController@storeFile')->middleware('jwt.verify');
+    Route::post('workdesignsFile/{id?}','Admin\WorkdesignController@storeFile');//->middleware('jwt.verify');
 
     //work
     Route::post('work','Admin\WorkController@store')->middleware('jwt.verify');
